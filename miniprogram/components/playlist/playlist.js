@@ -12,10 +12,8 @@ Component({
    * 数据监听器
    */
   observers: {
-
     // 监听对象的某个属性
     ['playlist.playCount'](count) {
-      console.log(count)
       this.setData({
        count : this._tranNumber(count, 2)
       })
