@@ -85,7 +85,8 @@ Page({
       name: 'music', //云函数名称
       data: {
         start: this.data.playlist.length,
-        count: MAX_LIMIT
+        count: MAX_LIMIT,
+        $url:'playlist' //如果有路由就写这句
       }
     }).then((res) => {
       this.setData({
