@@ -1,4 +1,5 @@
 // pages/demo/demo.js
+import regeneratorRuntime from '../../utils/runtime.js'
 Page({
 
   /**
@@ -16,10 +17,51 @@ Page({
    * 
    */
   onLoad: function (options) {
+    // wx.cloud.callFunction({
+    //   name: 'login'
+    // }).then(function (res) {
+    //   console.log(res)
+    // })
+
+    this.foo()
+    this.getMovieInfo()
+    this.getMusicInfo()
+  },
+
+  getMovieInfo(){
     wx.cloud.callFunction({
-      name:'login'
-    }).then(function(res){
+      name:'tcbRouterDemo',
+      data: {
+        $url:'movie'
+      }
+    }).then((res) => {
       console.log(res)
+    })
+  },
+
+  getMusicInfo() {
+    wx.cloud.callFunction({
+      name: 'tcbRouterDemo',
+      data: {
+        $url: 'music'
+      }
+    }).then((res) => {
+      console.log(res)
+    })
+  },
+
+
+  async foo() {
+    let res = await this.timeout()
+    console.log(res)
+  },
+
+  timeout() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log(1)
+        resolve('resolved')
+      },1000)
     })
   },
 

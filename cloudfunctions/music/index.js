@@ -10,6 +10,8 @@ const BASE_URL = 'http://musicapi.xiecheng.live'
 cloud.init()
 
 // 云函数入口函数
+// 提供给前端页面用的
+//  因为一个云环境最多创建50个云函数  所以用 router的形式
 exports.main = async (event, context) => {
   const app = new TcbRouter({ event })
 

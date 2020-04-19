@@ -7,11 +7,12 @@ cloud.init()
 const rp = require('request-promise')
 const db = cloud.database()
 
+// 推荐歌单
 const URL = 'http://musicapi.xiecheng.live/personalized'
 
 const playlistCollection = db.collection('playlist')
 
-const MAX_LIMIT = 10
+const MAX_LIMIT = 100
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -19,9 +20,10 @@ exports.main = async (event, context) => {
   //从数据库取数据 最多获取100条
   //const list = await playlistCollection.get()
 
-  // 突破小程序获取100条限制
+  // 突破小程序获取100条限制 
   const countResult = await playlistCollection.count()
   const total = countResult.total //获取到数据的总条数
+
   const batchTimes = Math.ceil(total / MAX_LIMIT)
   const tasks = []
   for (let i = 0; i < batchTimes; i++) {
@@ -64,6 +66,7 @@ exports.main = async (event, context) => {
 
 
   // 将获取到数据存储到云数据库当中
+  // 数据库只能一条一条插入
   for (let i = 0, len = newData.length; i < len; i++) {
     await playlistCollection.add({
       data: {
